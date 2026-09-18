@@ -1,0 +1,12 @@
+# dsh-loop-breaker 自带激活补丁（作为 bundle 层被应用）。
+# `insert:`（不带 id）会把条目**追加**到 profile 插件树顶层。
+- insert:
+    - id: loop-breaker
+      name: 'dsh-loop-breaker'
+      config:
+        # 同一调用连续重复 4 次就硬止损（AGENTS.md 里已要求"最多连续 2 次"，
+        # repeat-tool-reminder 在 2/3/5 提醒；这里给到 4 次即强制中断）。
+        consecutiveLimit: 4
+        # 同一调用在单轮流计 7 次即中断（防"穿插其他调用"的慢速循环；
+        # 2026-09 从 12 降到 7：长项目里白烧时间的大头是这种慢速循环）。
+        totalLimit: 7
